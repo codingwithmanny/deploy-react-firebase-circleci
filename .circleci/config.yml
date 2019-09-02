@@ -10,7 +10,6 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-         
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-npm
@@ -23,10 +22,23 @@ jobs:
           name: test
           command: npm run test-nowatch
   deploy: # deploy script
-    machine:
-      enabled: true
-    working_directory: ~/repository # same direction
+    working_directory: ~/repository
+    docker:
+      - image: circleci/node:10.16.3
     steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run: # build react
           name: react-build
           command: npm run build
