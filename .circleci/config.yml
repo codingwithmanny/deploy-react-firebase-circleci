@@ -45,3 +45,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build # perform this first
+      - deploy: # perform second
+        requires:
+            - build
+        filters: # only for the master branch
+            branches:
+                only: master
