@@ -31,7 +31,6 @@ jobs:
       - run: # modify .firebaserc with env variable
           name: modify-firebaserc
           command: sed -i "s/\[YOUR\-PROJECT\-ID\]/$FIREBASE_PROJECT_ID/g" .firebaserc
-
   deploy: # deploy script
     machine:
       enabled: true
@@ -50,6 +49,5 @@ workflows:
         requires:
           - build
         filters: # only for the master branch
-          branches:
-            only: master
-        
+            branches:
+                only: master
