@@ -47,7 +47,7 @@ workflows:
       - build # perform this first
       - deploy: # perform second
         requires:
-            - build
+          - build
         filters: # only for the master branch
-            branches:
-                only: master
+          branches:
+            only: master
