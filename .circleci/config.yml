@@ -22,6 +22,11 @@ jobs:
       - run:
           name: test
           command: npm run test-nowatch
+  deploy: # deploy script
+    machine:
+      enabled: true
+    working_directory: ~/repository # same direction
+    steps:
       - run: # build react
           name: react-build
           command: npm run build
@@ -31,11 +36,6 @@ jobs:
       - run: # modify .firebaserc with env variable
           name: modify-firebaserc
           command: sed -i "s/\[YOUR\-PROJECT\-ID\]/$FIREBASE_PROJECT_ID/g" .firebaserc
-  deploy: # deploy script
-    machine:
-      enabled: true
-    working_directory: ~/repository # same direction
-    steps:
       - run:
           name: Deploy Firebase
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only hosting
