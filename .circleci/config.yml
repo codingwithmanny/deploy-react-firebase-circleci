@@ -48,6 +48,6 @@ workflows:
       - deploy: # perform second
           requires:
             - build
-        # filters: # only for the master branch
-        #   branches:
-        #     only: master
+          filters: # only for the master branch
+            branches:
+              only: master
